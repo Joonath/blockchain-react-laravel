@@ -1,5 +1,5 @@
 # Tentang Repo
-Repository pembelajaran pembuatan Blockchain Smart Contract dengan ReactJS dan Laravel
+Repository pembelajaran pembuatan Blockchain Smart Contract dengan ReactJS dan Laravel. Modul Pembelajaran by https://learnweb3.io
 
 ## Development Concept
 - ReactJS bisa berperan sebagai front-end dan penghubung blockchain via ethers.js, dan juga routing via react-router
