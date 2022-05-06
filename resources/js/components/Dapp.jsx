@@ -35,17 +35,26 @@ const contractABI = [
 
 let moodContract;
 let signer;
+let provider;
 
-const getMood = async () => {
-	// const moodPromise = moodContract.getMood();
-	// const currentMood = moodPromise();
-	// console.log( null);
-	console.log("ok");
+const getMood = async() => {
+	const moodPromise = moodContract.getMood();
+	let currentMood = await moodPromise;
+
+	// moodPromise.then( (v) => {
+	// 	currentMood = v;
+	// });
+
+	console.log(currentMood);
+	// console.log("ok");
 
 	// return new Promise((solve, reject) => solve("OK"));
 
 };
-const setMood = () => {
+const setMood = async () => {
+	const inputEl = document.getElementById("mood").value;
+	const moodPromise = moodContract.setMood(inputEl);
+	await moodPromise;
 
 };
 const FormContext = () => {
@@ -58,8 +67,8 @@ const FormContext = () => {
 		<>
 			<label htmlFor="mood">Input Mood</label> &nbsp;
 			<input type="text" id="mood" />
-			<button onClick={async() => { await getMood()}}>Get Mood</button>
-			<button onClick={setMood}>Set Mood</button>
+			<button onClick={async() => await getMood()}>Get Mood</button>
+			<button onClick={async() => await setMood()}>Set Mood</button>
 		</>
 	)
 }
@@ -68,6 +77,18 @@ const Dapp = () => {
 	let mounted = 0;
 	React.useEffect( () => {
 		if(mounted) return;
+
+		provider = new ethers.providers.Web3Provider(window.ethereum, "ropsten");
+		provider.send("eth_requestAccounts", []).then( () => {
+			provider.listAccounts().then( (acc) => {
+				signer = provider.getSigner(acc[0]);
+				moodContract = new ethers.Contract(
+					contractAddress,
+					contractABI,
+					signer
+				);
+			});
+		});
 
 		document.title += " - Blockchain";
 

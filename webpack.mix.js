@@ -20,3 +20,4 @@ mix.js("resources/js/main.jsx", "public/js")
     .react().extract(["react"], "js/react.js")
     .extract(["ethers"], "js/ethers.js")
     .disableNotifications();
+    
